@@ -1,0 +1,48 @@
+<?php $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$userContext = $objectManager->get('Magento\Framework\App\Http\Context');
+$isLoggedIn = $userContext->getValue(\Magento\Customer\Model\Context::CONTEXT_AUTH);
+?>
+<?php 
+if($isLoggedIn){
+?>
+
+<li class="my_account_link_custom my_dashboard">
+<a class="my_dashboard" href="<?php echo $block->getUrl('marketplace/catalog'); ?>" title="<?php echo __('My Dashboard'); ?>"><?php echo __('My Dashboard'); ?></a>
+<div class="button">
+    <i class="fas fa-chevron-down dashboard_icon"></i>
+    </div>
+    <ul class="my_dashboard_menu_link">
+        <li><a href="<?php echo $block->getBaseUrl() ?>marketplace/catalog/seller/index/">Profile</li></a>
+        <li><a href="<?php echo $block->getBaseUrl() ?>marketplace/catalog/sales/order/">Orders</a></li>
+        <li><a href="<?php echo $block->getBaseUrl() ?>marketplace/catalog/product/new/set/4/type/simple/">Add Simple Product</a></li>
+        
+    </ul>
+</li>
+
+<li class="my_account_link_custom my_account"><a href="<?php echo $this->getUrl('customer/account');?>" title="<?php echo __('My Account'); ?>"><?php echo __('My Account'); ?></a></li>
+
+<?php }?> 
+
+<script>
+    let dashboardMenu = document.querySelector('.my_dashboard_menu_link');
+let accountDashboard = document.querySelector('.my_account_link_custom.my_dashboard');
+let button=document.querySelector('.button')
+button.addEventListener('click', function() {
+  
+const icon = document.querySelector('i');
+
+  if (icon.classList.contains('fa-chevron-down')) {
+    icon.classList.remove('fa-chevron-down');
+    icon.classList.add('fa-chevron-up');
+	dashboardMenu.style.display= 'block';
+    button.style.top='12%'
+    accountDashboard.style.paddingBottom="0";
+            
+  } else {
+    icon.classList.remove('fa-chevron-up');
+    icon.classList.add('fa-chevron-down');
+	dashboardMenu.style.display= 'none';
+    button.style.top='50%'
+  }
+});
+</script>
